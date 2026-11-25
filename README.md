@@ -1,5 +1,7 @@
 # Exact stabilizer rank of tensor powers, in Lean 4
 
+Orchestrated and formally verified by Jack Ryan in collaboration with Claude Opus 5.5, Claude Fable 5.2, GPT-6.2 Astra, and Gemini 4 Neon. The main theorems are formalized in Lean 4 (preprint, not yet peer reviewed).
+
 **Claim.** Let `ψ` be a vector of finitely many qubits that is not a stabilizer vector. (A stabilizer vector is a complex
 multiple of a stabilizer state; the zero vector counts.) Then there is a number `c > 0` such that, for every `n`, the tensor
 power `ψ^{⊗n}` is not a sum of fewer than `2^{cn}` stabilizer vectors: the exact stabilizer rank of `ψ^{⊗n}` is at least
@@ -42,8 +44,8 @@ other part of their Conjecture 1 (magic states have the smallest rank).
   `t_state` and `standard_form`; `unconditional/FCBridgeU.lean` applies it to the theorems without hypothesis (see "The
   formal-conjectures target").
 
-Research driven, orchestrated and reviewed by Jack Ryan. Claude (by Anthropic), GPT-6.2 Astra (by OpenAI) and Gemini 4 Neon
-(by Google) collaborated in finding and writing the proofs. Formalized in Lean 4: the six statements of `Challenge/Statement.lean`
+Orchestrated and formally verified by Jack Ryan in collaboration with Claude Opus 5.5, Claude Fable 5.2, GPT-6.2 Astra, and Gemini 4 Neon.
+Formalized in Lean 4: the six statements of `Challenge/Statement.lean`
 (`stabilizer_rank_exponential`, `tensor_power`, `t_state`, `t_state_field`, `standard_form`,
 `stabilizer_rank_exponential_standard`) and the formal-conjectures statement `superpolynomial_stabilizer_rank`, all without
 hypothesis in `unconditional/`. The parts in detail: Claude found
@@ -52,7 +54,7 @@ route, and made a second read of the claim against the Lean statements. GPT-6.2 
 the claim in a blind read, read an earlier version of the paper line by line, and gave the argument for Step 0 of Lemma 3.1 that the paper now
 writes out. GPT-6.2 Sol (by OpenAI) searched the literature and reviewed this text.
 
-No professional mathematician has refereed this repository.
+Preprint, not yet peer reviewed.
 
 **The result rests on OpenAI's spectral plane theorem** (`matrix_spectral_plane`, paper "Euclidean geometry in the asymptotic
 spectrum of tensors", 24 November 2026, https://github.com/openai/math). That theorem is proved in OpenAI's Lean library; it is
