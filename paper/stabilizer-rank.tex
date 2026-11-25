@@ -101,9 +101,9 @@ H\Big(\sum_{j\le J}t_j\Big)\le\max_jH(t_j)+\delta(A)\log_2J\qquad(t_j\text{ tens
 
 We use four facts from \cite{EG}, over the field $\C$.
 \begin{itemize}
-\item[(I1)] (Theorem 1.1.) Let $o_1,o_2,o_3$ be the vertices of an equilateral triangle of side $1$ in the plane and $m_{12},m_{13}$ the midpoints of two sides. There is a price on these five parties with $d$ equal to the Euclidean distance and $\delta(\{o_1,o_2,o_3\})=\frac32$.
+\item[(I1)] (Theorem 1.1.) Let $o_1,o_2,o_3$ be the vertices of an equilateral triangle of side $1$ in the plane and $m_{12}$ the midpoint of $o_1o_2$. There is a price on these four parties with $d$ equal to the Euclidean distance and $\delta(\{o_1,o_2,o_3\})=\frac32$.
 \item[(I2)] (Proposition ``Copying a common label''.) For every price, $\delta(A\cup B)+\delta(A\cap B)\le\delta(A)+\delta(B)$ if $A\cap B\ne\emptyset$.
-\item[(I3)] (Corollary ``Geodesic extension''.) For every price, $d(m,m')=0$ if $m$ and $m'$ are both midpoints of $a,b$.
+\item[(I3)] (Theorem 4.3, ``Curvature''.) Every spectral space embeds isometrically, with its prices, in a complete geodesic CAT(0) spectral space. For a pseudometric we first identify sites at distance zero.
 \item[(I4)] (Lemma ``Closure''.) If $H\le B$ on a set of nonzero tensors of one format, then $H\le B$ at the nonzero points of its Zariski closure.
 \end{itemize}
 $d$ is a pseudometric, $\delta$ is monotone.
@@ -136,16 +136,33 @@ Let $H$ be the price of (I1). For finite sets $X,Y,Z$ and $T\colon X\times Y\tim
 \]
 where $o_1,o_2,o_3$ hold the indices $(x,y)$, $(y,z)$, $(z,x)$. For $T=1$ it is a product of three wires. The lift is linear in $T$ and $\widehat{T\otimes T'}=\hat T\,\hat T'$. A function of two of the three arguments that multiplies $T$ acts on $\hat T$ by a diagonal map at one party.
 
-\begin{proposition}\label{prop:expensive}
-For every $q\ge2$ there are $b\ge1$ and $T\colon([q]^b)^3\to\C$ with $H(\hat T)>3b\log_2q$.
+\begin{proposition}[Quantitative price gap]\label{prop:expensive}
+Fix an integer $q\ge2$. With the pricing on the four sites of (I1),
+\[
+\sup_{b\ge1,\,T\ne0}\frac{H(\hat T)}{b\log_2q}
+ \ \ge\ 3+\frac{2\sqrt3-3}{4},
+\]
+where $T$ ranges over tables on $([q]^b)^3$. In particular some finite table has price greater than
+$(3+\frac{23}{200})b\log_2q$.
 \end{proposition}
 \begin{proof}
-Suppose $H(\hat T)\le3b\log_2q$ for all $b$ and $T$. Let $U=\unit q{o_1o_3R}\unit q{o_1o_2R}\unit q{o_2o_3R}$ with a new party $R$. The functionals $\ell$ on the index of $U^b$ at $R$ are the functions $T$ on $([q]^b)^3$, and $\ell(U^b)=\hat T$. Apply Lemma \ref{lem:ext} to $\varphi=2^{H/s}$ on the five parties, where $s$ is the price of the binary label on them.
-There is a price on six parties that extends $H$, with $\delta(o_1o_2R)+\delta(o_2o_3R)+\delta(o_1o_3R)\le3$. Each term is at least $d(o_i,o_j)=1$, so each is $1$. By (I2) for $A=\{o_1,o_2,R\}$, $B=\{o_1,o_3,R\}$,
+Suppose $H(\hat T)\le (3+E)b\log_2q$ for all $b$ and $T$. Let
+$U=\unit q{o_1o_3R}\unit q{o_1o_2R}\unit q{o_2o_3R}$ with a new party $R$. The functionals $\ell$ on the index of $U^b$ at $R$ are the tables on $([q]^b)^3$, with $\ell(U^b)=\hat T$. Apply Lemma \ref{lem:ext} to $\varphi=2^{H/s}$ on the four old parties, where $s$ is the price of their binary label. It gives an extension with
 \[
-\tfrac32+d(o_1,R)\le\delta(A\cup B)+\delta(A\cap B)\le2 ,
+\sum_{1\le i<j\le3}\delta(\{o_i,o_j,R\})\le3+E.
 \]
-so $d(o_1,R)\le\frac12$, and in the same way $d(o_2,R),d(o_3,R)\le\frac12$. So $R$ is a midpoint of $o_1,o_2$ and of $o_1,o_3$. By (I3) it has distance $0$ from $m_{12}$ and from $m_{13}$. But $d(m_{12},m_{13})=\frac12$.
+Write $x_{ij}=\delta(\{o_i,o_j,R\})-1$ for each unordered pair. Monotonicity gives $x_{ij}\ge0$ and $\sum_{i<j}x_{ij}\le E$. Intersecting submodularity applied to the triples $\{o_i,o_j,R\}$ and $\{o_i,o_k,R\}$ gives
+\[
+\tfrac32+d(R,o_i)\le2+x_{ij}+x_{ik}.
+\]
+Summing over the vertices yields $\sum_i d(R,o_i)\le\tfrac32+2E$.
+
+In the complete CAT(0) space of (I3), the old $m_{12}$ is the midpoint of $o_1o_2$, and its distance to $o_3$ is $\sqrt3/2$, equal to the comparison distance.
+The flat triangle lemma \cite[Proposition 2.8]{Bridson} therefore identifies the convex hull of $o_1,o_2,o_3$ with a Euclidean equilateral triangle. Nearest-point projection onto that hull decreases the distance from $R$ to each vertex \cite[Proposition 2.6(1)]{Bridson}. In the Euclidean triangle, the sum of distances to the vertices is convex and invariant under $120^\circ$ rotation about the center. Averaging the three rotations shows that the sum is minimized at the center, where it is $\sqrt3$. Consequently
+\[
+\sqrt3\le \sum_i d(R,o_i)\le\tfrac32+2E.
+\]
+Every uniform upper bound must have $E\ge (2\sqrt3-3)/4>23/200$.
 \end{proof}
 
 \begin{lemma}[Stabilizer vectors are cheap]\label{lem:cheap}
@@ -167,14 +184,41 @@ N\,H(\hat\Phi)=H\big(\widehat{\Phi^{\otimes N}}\big)\le3bN\log_2p+\tfrac32\,o(N)
 \]
 so $H(\hat\Phi)\le3b\log_2p$. By (I4) and Lemma \ref{lem:dense} this holds for all nonzero $\Phi\in V^{\otimes3b}$, that is, for all $T\colon(\F_p^b)^3\to\C$ and all $b$. This contradicts Proposition \ref{prop:expensive}. \qed
 
+\subsection{A bound in terms of the witness size for the T state}\label{sec:tquant}
+Take a complex-valued witness table on binary strings from Proposition \ref{prop:expensive}, with block size $b$. Put
+$w=3b$, $D=2^w$, $L=w+11$, $M=2^L$ and $h=bM$. Regard each input to $T^{\otimes M}$ as a list of $M$ words of $w$ bits.
+The value of $T^{\otimes M}$ is constant on each class of lists with the same word multiplicities. There are at most
+$(M+1)^D$ such classes. Expand $T^{\otimes M}$ as a sum of the indicators of the classes with nonzero values,
+each multiplied by that value. A nonzero scalar leaves the price unchanged. The sum inequality on the three occupied sites adds at most
+\[
+\tfrac32 D\log_2(M+1)\le\tfrac{45}{2}bD<\tfrac{3}{200}h.
+\]
+By multiplicativity the lifted power costs more than $(3+\frac{23}{200})h$. Thus some class indicator $S$ on three $h$-bit blocks has $H(\hat S)>(3+\frac1{10})h$.
+
+To compute $S$, sort the list of $M$ words and compare it with the fixed sorted list for that class. Batcher's bitonic sorting network \cite{Batcher} sorts the two halves in parallel and merges $2^j$ words in $j$ layers at level $j$. Its $1+\cdots+L$ layers each have $M/2$ comparisons, giving $Q=ML(L+1)/4$ compare-and-exchange operations.
+Each uses at most $2w$ Boolean AND gates, with XOR and NOT free for this count. To compare, process bits from least to most significant. Given the comparison bit $c$ for the lower bits, the bit after reading $a_i,b_i$ is $c\oplus((a_i\oplus b_i)\land(a_i\oplus c))$.
+To swap conditionally, XOR each bit of both words with the comparison bit AND the difference of the two bits. Comparing the sorted list with the fixed list uses at most $wM$ further AND gates.
+
+Evaluate the circuit reversibly on $wM$ plus states, storing each gate output in a fresh ancilla. Use a Toffoli for each AND, copy the decision bit, and reverse the circuit to reset the workspace. Postselect the copied bit to be one. A Toffoli takes seven $T$ or $T^\dagger$ gates: conjugate a CCZ by Hadamards on the target and use the identity
+\[
+4xyz=x+y+z-(x\oplus y)-(x\oplus z)-(y\oplus z)+(x\oplus y\oplus z)
+\]
+on bits. Each parity is computed and uncomputed by CNOT gates. A $T$ gate is realized by a CNOT from the data bit to a copy of $\ket T$ followed by postselection of that copy onto zero. A Clifford phase correction changes this to $T^\dagger$. Thus a stabilizer operation on $k\le14w(2Q+M)=42h(1+L(L+1)/2)$ copies of $\ket T$ produces $S$ up to a nonzero scalar.
+
+The gap and the sum inequality give $\chi(\ket T^{\otimes k n})\ge 2^{hn/15}$ for all $n\ge1$.
+Tensoring a decomposition of $\ket T^{\otimes n}$ $k$ times gives
+$\chi(\ket T^{\otimes k n})\le \chi(\ket T^{\otimes n})^k$. In particular one may take
+$c=[630(1+L(L+1)/2)]^{-1}$ in the exponential bound, where $L=3b+11$.
+This argument for $\ket T$ uses the price gap and exact Boolean preparation.
+
 \section{Remarks}
 \begin{enumerate}
-\item \emph{Constants.} $c(\psi)$ is not explicit: the table $T$ of Proposition \ref{prop:expensive} comes from Zorn's lemma, and the number of copies of $\psi$ that is needed to leave the closed set $\{H(\hat\Phi)\le3b\log_2p\}$ is not bounded.
+\item \emph{Constants.} Proposition \ref{prop:expensive} quantifies the price gap per output bit block. Section \ref{sec:tquant} bounds the exponent for $\ket T$ in terms of the block size of a price witness. The existence argument leaves that block size unspecified.
 \item \emph{What is not proved.} Nothing is said about approximate stabilizer rank with constant error, stabilizer extent or stabilizer fidelity. Prices are semicontinuous and do not see errors that are small in norm. Systems with more than two levels are not treated here: an extension to every prime dimension exists as an unformalized draft and is not part of this release.
 \item \emph{Known before, as far as a search on 25 November 2026 shows.} Exact rank of $\ket T^{\otimes n}$: $\Omega(n)$ (Peleg, Shpilka, Volk 2021, Lovitz and Steffan), and $\Omega(n)$ for qudit analogues in prime dimensions (Labib, arXiv 2107.10551); super-polynomial unless the permanent has polynomial-size circuits (Mehraban and Tahmasbi, Theorem 1.6, a conditional bound); nearly quadratic bounds also for approximation (Mehraban and Tahmasbi 2023, arXiv 2305.10277; arXiv 2610.06819, October 2026, for all non-stabilizer qubit states). arXiv 2610.03658 (October 2026) gives $\Omega(n^2/\mathrm{polylog}\,n)$ as the best known bound. Upper bounds are exponential with small exponent.
 \item \emph{What is a short corollary.} For the state $\ket T$, the exponential-growth conjecture following Conjecture~1 in \cite{BSS} is a short application of \cite{EG}: the price of a stabilizer state of $3h$ qubits, split into three blocks of $h$ qubits at the corners of the triangle, is at most $\frac32h$ by the GHZ/EPR decomposition of Bravyi, Fattal and Gottesman (2006); the theorem ``Exact extension'' of \cite{EG}, part (2), on a triangle with two side midpoints gives a table above that value (this also replaces Proposition \ref{prop:expensive}); Clifford$+T$ universality gives density. This was pointed out in our internal review. For an arbitrary single-qubit non-stabilizer vector, this proof uses the density argument in Lemmas \ref{lem:one} and \ref{lem:dense}. Reichardt's multi-qubit reduction \cite[Appendix B]{Reichardt} then extends the rank bound to states on any number of qubits, since stabilizer operations preserve the class of stabilizer vectors.
 \item \emph{Related work on other resource ranks.} A zero-one law for the approximate Gaussian rank of every non-Gaussian state is in arXiv 2610.02172 (1 October 2026); its outlook asks for the stabilizer analogue. See also arXiv 2610.03699.
-\item \emph{Machine check.} Lean 4 (this repository) proves the following, for exact rank only. The hypothesis of (a) and (b) is the statement of OpenAI's theorem \texttt{matrix\_spectral\_plane} (planar prices over every field), which is proved in OpenAI's Lean library; the form in which that theorem is a real import (\texttt{unconditional/Solution.lean}) was built on 25 November 2026, with the axioms \texttt{propext}, \texttt{Classical.choice}, \texttt{Quot.sound} only. (a) Theorem \ref{thm:main}, every number $m$ of qubits, over $\C$ (\texttt{stabilizer\_rank\_exponential}). (b) The case $\ket T$ over $\C$ (\texttt{t\_state}), and over every field $F$ with $2\ne0$ that has an element $\omega$ with $\omega^4=-1$ (\texttt{t\_state\_field}). There the stabilizer vectors are made with the gates $H$, $S=\mathrm{diag}(1,\omega^2)$ and CNOT, and the vector is $b\mapsto\omega^{|b|}$. (c) Without hypothesis: the standard form (S2) over $\C$, and the case of a stabilizer vector. For $\ket{\mathrm{CCZ}}$ there is no checked top-level statement. Over $\C$ it is an instance of (a) once one shows that $\ket{\mathrm{CCZ}}$ is not a stabilizer vector; that step is not formalized. An internal lemma (\texttt{ccz\_state} in \texttt{StabilizerRank/Main.lean}, compiled with the rest) states, over every field with $2\ne0$ and for every $\iota$ with $\iota^4=1$, given planar prices over that field: there are $c>0$ and $n_0$ such that for $n\ge n_0$ the function $(-1)^{\sum_ix_iy_iz_i}$ is not a linear combination of fewer than $2^{cn}$ functions $[x\in A]\,\iota^{l(x)}(-1)^{q(x)}$; its axioms were not printed and its statement was not compared with a separate statement file. The Lean proof uses another reduction to one qubit (four points of a plane and eight points of a cube), not Lemma \ref{lem:reduce}; Lemma \ref{lem:cheap} is from there. Lemmas \ref{lem:one} to \ref{lem:reduce} in this form are not formalized. The claim of this paper is what Lean checks; the text above is an informal account of it.
+\item \emph{Machine check.} Lean 4 (this repository) proves the following, for exact rank only. The hypothesis of (a) and (b) is the statement of OpenAI's theorem \texttt{matrix\_spectral\_plane} (planar prices over every field), which is proved in OpenAI's Lean library; the form in which that theorem is a real import (\texttt{unconditional/Solution.lean}) was built on 25 November 2026, with the axioms \texttt{propext}, \texttt{Classical.choice}, \texttt{Quot.sound} only. (a) Theorem \ref{thm:main}, every number $m$ of qubits, over $\C$ (\texttt{stabilizer\_rank\_exponential}). (b) The case $\ket T$ over $\C$ (\texttt{t\_state}), and over every field $F$ with $2\ne0$ that has an element $\omega$ with $\omega^4=-1$ (\texttt{t\_state\_field}). There the stabilizer vectors are made with the gates $H$, $S=\mathrm{diag}(1,\omega^2)$ and CNOT, and the vector is $b\mapsto\omega^{|b|}$. (c) Without hypothesis: the standard form (S2) over $\C$, and the case of a stabilizer vector. For $\ket{\mathrm{CCZ}}$ there is no checked top-level statement. Over $\C$ it is an instance of (a) once one shows that $\ket{\mathrm{CCZ}}$ is not a stabilizer vector; that step is not formalized. An internal lemma (\texttt{ccz\_state} in \texttt{StabilizerRank/Main.lean}, compiled with the rest) states, over every field with $2\ne0$ and for every $\iota$ with $\iota^4=1$, given planar prices over that field: there are $c>0$ and $n_0$ such that for $n\ge n_0$ the function $(-1)^{\sum_ix_iy_iz_i}$ is not a linear combination of fewer than $2^{cn}$ functions $[x\in A]\,\iota^{l(x)}(-1)^{q(x)}$; its axioms were not printed and its statement was not compared with a separate statement file. The Lean proof uses another reduction to one qubit (four points of a plane and eight points of a cube), not Lemma \ref{lem:reduce}; Lemma \ref{lem:cheap} is from there. Lemmas \ref{lem:one} to \ref{lem:reduce} in this form are not formalized. The formalized theorem gives a positive price gap. Proposition \ref{prop:expensive} gives the quantitative improvement in the paper.
 \item \emph{Blind check of Lemma \ref{lem:reduce}.} Gemini 4 Neon (Google) received the statement of Lemma \ref{lem:reduce} with all definitions and without the proof, and returned a different complete proof, by the contractions of one qubit with $\ket0,\ket1,\ket+,\ket-$ and the facts that a nonzero stabilizer vector has an affine support and constant modulus on it. Claude checked that proof line by line and found no gap. Both proofs use the fact (S1) that stabilizer operations map stabilizer vectors to stabilizer vectors.
 \item \emph{Line-by-line read.} GPT-6.2 Astra (OpenAI) read an earlier and longer version of this paper as a hostile referee on 25 November 2026, with the source of \cite{EG} at hand. It found no error. It found one gap: Step 0 of the proof of Lemma \ref{lem:ext} said without proof that two functions are in the set. The paragraph ``Why the two functions are in the set'' was added after that read, along the lines that Astra gave, and Step 2 now says how the same argument applies to $q_C$. Two Claude agents checked these additions one after the other; no other model has read them. Astra also noted that Remark 4 covers the state $\ket T$ and not every vector of one qubit; the remark now says so.
 \end{enumerate}
@@ -182,6 +226,8 @@ so $H(\hat\Phi)\le3b\log_2p$. By (I4) and Lemma \ref{lem:dense} this holds for a
 \begin{thebibliography}{9}
 \bibitem{EG} OpenAI, \href{https://github.com/openai/math/blob/3344da59991ed94f9ba711217b29c1d760badfa6/preprints/Euclidean-geometry-in-the-asymptotic-spectrum-of-tensors-November-24-2026/paper.pdf}{\emph{Euclidean geometry in the asymptotic spectrum of tensors}}, 24 November 2026.
 \bibitem{Reichardt} B. W. Reichardt, \href{https://doi.org/10.1007/s11128-005-7654-8}{\emph{Quantum Universality from Magic States Distillation Applied to CSS Codes}}, Quantum Information Processing 4, 251--264 (2005). See Appendix B of \href{https://arxiv.org/pdf/quant-ph/0411036}{arXiv:quant-ph/0411036}.
-\bibitem{BSS} S. Bravyi, G. Smith, and J. A. Smolin, \emph{Trading classical and quantum computational resources}, Phys. Rev. X 6, 021043 (2016), \href{https://arxiv.org/abs/1506.01396}{arXiv:1506.01396}, Sec.~IV.
+\bibitem{BSS} S. Bravyi, G. Smith, and J. A. Smolin, \emph{Trading classical and quantum computational resources}, Phys. Rev. X 6, 021043 (2016), \href{https://arxiv.org/abs/1506.01396}{arXiv:1506.01396}, Sec.~II.
+\bibitem{Bridson} M. R. Bridson, \href{https://people.maths.ox.ac.uk/bridson/papers/BATH97.pdf}{\emph{Non-positive curvature in group theory}}, in Groups St Andrews 1997 in Bath, vol. I, LMS Lecture Note Ser. 260, Cambridge University Press, 1999, pp. 124--175, Propositions 2.6 and 2.8.
+\bibitem{Batcher} K. E. Batcher, \href{https://doi.org/10.1145/1468075.1468121}{\emph{Sorting networks and their applications}}, AFIPS Spring Joint Computer Conference, vol. 32, 1968, pp. 307--314.
 \end{thebibliography}
 \end{document}

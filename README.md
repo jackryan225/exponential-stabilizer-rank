@@ -183,7 +183,7 @@ checks those terms. The 895 files of the conditional form have no metaprogrammin
 - **Qudits.** The theorem is for qubits. Nothing here covers systems with more than two levels.
 - **Mixed states and other gate sets.** The theorem is about pure vectors and the stabilizer vectors defined above.
 - **Optimality.** Conjecture 1 of Bravyi, Smith and Smolin asks which single-qubit states minimize exact rank among
-  non-stabilizer states. The exponential-growth conjecture follows it in Section IV.
+  non-stabilizer states. The exponential-growth conjecture follows it in Section II.
 
 ## What is a corollary and what is new
 
@@ -249,22 +249,31 @@ Before this work, the best unconditional lower bounds for the exact stabilizer r
 polynomial bounds. We found no earlier statement of an exponential lower bound for the exact stabilizer rank of `ψ^{⊗n}`. If you know
 one, please tell us.
 
-## The proof in short
+## Proof map
 
-1. **Stabilizer vectors are cheap.** Write `n` copies of `ψ` as a function of three groups of bits. The price of a stabilizer
-   vector on these legs is at most the number of bits (`StabilizerRank/Lift.lean`). A sum of `J` terms adds at most a constant
-   times `log2 J` (`StabilizerRank/Main.lean`).
-2. **Some table is expensive.** There is a table of zeros and ones on three groups of bits whose price is larger than the
-   number of bits. This uses that midpoints are unique in the plane of prices and a lemma on three legs at the corners of a
-   triangle (`NOF/`). Its powers are expensive in proportion to the power.
-3. **The tables reachable from copies of `ψ` are dense.** We use operations that keep "few stabilizer terms": multiplication with a quadratic
-   phase, substitution of affine maps, and sums over one bit. With them, copies of a vector that is not a stabilizer vector
-   give a one-qubit vector `(1, a)` with `a ≠ 0` and `a^4 ≠ 1` (`StabilizerRank/Reduce.lean`; the argument looks at 4 points
-   of a plane and 8 points of a cube). If `a` is a root of unity, the Hadamard transform gives `(1, (1-a)/(1+a))`, and
-   `(1-a)/(1+a)` is not a root of unity. Products of powers of such a gate along linear forms are dense in all tables in the
-   Zariski topology (`StabilizerRank/Dense.lean`, independence of characters). The tensors with a price at most a bound form a
-   closed set in the Zariski topology (a theorem in the OpenAI files), so some product has a large price.
-4. **Count.** Compare the price of the `N`-th power of the expensive table with the bound from step 1.
+1. **Fix the meaning of exact rank.** A stabilizer vector is a scalar multiple of the phase `i^ℓ(x) (-1)^q(x)` on
+   an affine support, with `ℓ` linear and `q` quadratic. [`standard_form`](unconditional/Solution.lean#L51-L56) proves this equivalence. The final
+   [`stabilizer_rank_exponential_standard`](unconditional/Solution.lean#L57-L69) states the bound in that form
+   using Mathlib definitions.
+2. **Compare tensor prices.** A lift sends a table on three bit blocks to a tensor whose three parties hold pairs
+   of indices. [`stab_price`](StabilizerRank/Lift.lean#L550) bounds the price of each lifted stabilizer term by the total
+   number of bits. [`price_sum_le`](StabilizerRank/Main.lean#L16) adds a cost proportional to `log₂ J` for a sum of `J`
+   terms. [`exists_table`](NOF/Prop.lean#L164) supplies a lifted table above that ceiling. Proposition 3.2 of the
+   [paper](paper/stabilizer-rank.tex) gives a table of price greater than `(3 + 23/200)b` for three `b`-bit blocks.
+3. **Reach a table above the ceiling.** Affine substitutions, quadratic phases and sums over a bit preserve the
+   stabilizer class. The multi-qubit reduction and the one-qubit density argument allow a table above the ceiling
+   to be realized using a finite number of copies of the input state. A Hadamard step handles amplitude ratios
+   that are roots of unity, and Zariski density reaches the open set of tables above the ceiling. The Lean proof uses
+   [`exponential_of_not_stab`](StabilizerRank/All.lean#L119) and [`exists_rep_table`](StabilizerRank/Dense.lean#L200).
+4. **Take tensor powers.** Each copy of that table adds the same positive gap. The cost of combining `J` stabilizer
+   terms grows logarithmically in `J`. [`rank_core`](StabilizerRank/Main.lean#L122) gives the comparison, with the
+   headline result assembled in [`Solution.stabilizer_rank_exponential`](unconditional/Solution.lean#L24).
+
+The paper's quantitative price gap uses the fixed placement of an equilateral triangle and one side midpoint.
+Section 4.1 of the paper gives a bound on the T-state exponent in terms of the witness size, using exact Boolean
+preparation. The Lean proof uses two midpoints and checks a positive price gap. The headline Lean argument takes
+the existence of prices over the complex numbers from OpenAI's spectral-plane theorem and discards its convexity
+conclusion.
 
 ## Files
 
