@@ -183,7 +183,7 @@ checks those terms. The 895 files of the conditional form have no metaprogrammin
 - **Qudits.** The theorem is for qubits. Nothing here covers systems with more than two levels.
 - **Mixed states and other gate sets.** The theorem is about pure vectors and the stabilizer vectors defined above.
 - **Optimality.** Conjecture 1 of Bravyi, Smith and Smolin asks which single-qubit states minimize exact rank among
-  non-stabilizer states. The exponential-growth conjecture follows it in Section IV.
+  non-stabilizer states. The exponential-growth conjecture follows it in Section II.
 
 ## What is a corollary and what is new
 
