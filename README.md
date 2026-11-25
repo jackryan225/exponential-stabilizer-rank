@@ -9,8 +9,8 @@ power `ψ^{⊗n}` is not a sum of fewer than `2^{cn}` stabilizer vectors: the ex
 (`Solution.stabilizer_rank_exponential`). The proof uses one theorem that we did not prove: OpenAI's spectral plane theorem
 `matrix_spectral_plane`, which OpenAI proved in its own Lean library. The Lean kernel checked our files together with that
 library, and the axioms are the three standard ones. For the T state the claim gives the bound `χ(T^{⊗n}) ≥ 2^{Ω(n)}` that
-Bravyi, Smith and Smolin conjectured in 2016. That case is a short corollary of OpenAI's paper. The claim does not give the
-other part of their Conjecture 1 (magic states have the smallest rank).
+Bravyi, Smith and Smolin conjectured in 2016 after their Conjecture 1. The T-state bound is a short corollary of OpenAI's
+paper. Conjecture 1 itself concerns which states have the smallest rank and remains open here.
 
 **Scope.**
 - **Exact rank only.** Nothing about approximate stabilizer rank, stabilizer extent, or classical simulation in general. The
@@ -36,8 +36,8 @@ other part of their Conjecture 1 (magic states have the smallest rank).
   set. The paper now writes that step out along the lines that Astra gave. Claude read the paper line by line, and two
   Claude agents checked the new text one after the other. No model other than Claude has read the new text.
 - **A short corollary of OpenAI's paper:** the case of the T state, that is, the 2016 question itself (see "What is a
-  corollary and what is new"). Our part is the extension to every non-stabilizer vector of any number of qubits, the
-  machine-checked proof, and the Lean proof of the formal-conjectures target below.
+  corollary and what is new"). This work establishes the exact-rank dichotomy for arbitrary qubit states and formalizes
+  it in Lean, including the formal-conjectures target below.
 - **Bridge to the DeepMind target:** `Check/FCBridge.lean` proves the Lean statement `superpolynomial_stabilizer_rank` of
   google-deepmind/formal-conjectures pull request 8164 (definitions and statement copied unchanged, comments aside; the
   pull request is open and not merged) from
@@ -128,8 +128,8 @@ and do not grow under restrictions. A sum of `J` tensors costs at most the large
 price of one bit that all occupied sites share (the diagonal tensor with two values). Our proof uses only the existence of these
 prices. It does not use the convexity part of the theorem.
 
-The import closure of `EveryField.lean` has 7,283 files. A GitHub runner cannot build it in its time limit. For this reason the
-repository has two forms of each theorem.
+The import closure of `EveryField.lean` has 7,283 files. The default GitHub workflow verifies the smaller build. The
+repository also provides a separate build that imports the complete dependency.
 
 1. **Conditional form** (default build). `StabilizerRank/Final.lean` proves the four rank bounds with one hypothesis,
    `MatrixSpectralPlane` (`tensor_power` and `standard_form` need none). Its definition is the statement of `matrix_spectral_plane`, word for word. Only 867 OpenAI files
@@ -145,7 +145,7 @@ repository has two forms of each theorem.
 
 | Check | Tool | Hypothesis | Result |
 |---|---|---|---|
-| Build of `StabilizerRank` (895 files) | Lean 4.34.1 kernel (`lake build`) | `MatrixSpectralPlane` | passed, 9,819 jobs, 25 November 2026 (`logs/p5r-2c-build.txt`); the GitHub workflow has not run |
+| Build of `StabilizerRank` (895 files) | Lean 4.34.1 kernel (`lake build`) | `MatrixSpectralPlane` | passed locally (`logs/p5r-2c-build.txt`) and in [GitHub Actions on commit `df8a4d7`](https://github.com/jackryan225/exponential-stabilizer-rank/actions/runs/45612060835), 25 November 2026 |
 | Axioms of the 8 results | `#print axioms` (`Check/Axioms.lean`) | | `propext`, `Classical.choice`, `Quot.sound` only, 8 of 8 (`logs/p5r-3-axioms.txt`) |
 | Statements equal to `Challenge/Statement.lean` | `Check/SameStatement.lean` (definitional and syntactic) | | passed (`logs/p5r-4-same.txt`) |
 | Form without hypothesis | `lake build Unconditional` (`Solution`, `SameStatementU`, `FCBridgeU`, with the 7,283 files of the import closure of `EveryField.lean`) | none | passed, 16,410 jobs (`logs/p5r-5-uncond.txt`); `SameStatementU`: "the statements are equal as terms, and the hypothesis is the statement of matrix_spectral_plane" |
@@ -182,8 +182,8 @@ checks those terms. The 895 files of the conditional form have no metaprogrammin
   simulation in general.
 - **Qudits.** The theorem is for qubits. Nothing here covers systems with more than two levels.
 - **Mixed states and other gate sets.** The theorem is about pure vectors and the stabilizer vectors defined above.
-- **The optimality part of Conjecture 1 of Bravyi, Smith and Smolin** (magic states have the smallest stabilizer rank among
-  non-stabilizer single-qubit states). We prove only that every non-stabilizer vector has exponential rank.
+- **Optimality.** Conjecture 1 of Bravyi, Smith and Smolin asks which single-qubit states minimize exact rank among
+  non-stabilizer states. The exponential-growth conjecture follows it in Section IV.
 
 ## What is a corollary and what is new
 
@@ -192,10 +192,11 @@ For the T state this follows in a few lines from the OpenAI paper: the price of 
 into three blocks of `h` qubits, is at most `3h/2` (GHZ/EPR form of three-party stabilizer states, Bravyi-Fattal-Gottesman 2006), the paper's theorem
 "Exact extension" (2) on a triangle with two side midpoints gives a table above that value, and Clifford+T gates are dense.
 The OpenAI paper and library do not state this corollary (we searched them on 25 November 2026), but the credit for the
-mechanism is OpenAI's. What we add: the dichotomy for every vector of any number of qubits (a reduction to one qubit by
-stabilizer operations and a density argument), a proof that uses no GHZ/EPR normal form (`StabilizerRank/Lift.lean`), the
-machine check, and a bridge to the open Lean target of formal-conjectures (below). The paper `paper/stabilizer-rank.tex`
-is an informal account of the same theorem.
+mechanism is OpenAI's. The arbitrary-state dichotomy combines these tensor prices with a single-qubit density argument
+and a stabilizer reduction. The multi-qubit-to-single-qubit reduction was established by [Ben W. Reichardt (2005,
+Appendix B)](https://arxiv.org/pdf/quant-ph/0411036). The paper `paper/stabilizer-rank.tex` gives an alternative proof of that
+reduction. The Lean development includes a direct stabilizer price bound (`StabilizerRank/Lift.lean`) and a proof of the
+open formal-conjectures target (below).
 
 ## The formal-conjectures target
 
