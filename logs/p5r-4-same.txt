@@ -1,0 +1,9 @@
+⚠ [2257/2258] Replayed Challenge.Statement
+warning: Challenge/Statement.lean:22:8: declaration uses `sorry`
+warning: Challenge/Statement.lean:29:8: declaration uses `sorry`
+warning: Challenge/Statement.lean:35:8: declaration uses `sorry`
+warning: Challenge/Statement.lean:41:8: declaration uses `sorry`
+warning: Challenge/Statement.lean:49:8: declaration uses `sorry`
+warning: Challenge/Statement.lean:57:8: declaration uses `sorry`
+Build completed successfully (2258 jobs).
+the statements are equal as terms

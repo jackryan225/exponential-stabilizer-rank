@@ -1,0 +1,36 @@
+name: check
+on:
+  push:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  lean:
+    runs-on: ubuntu-latest
+    timeout-minutes: 300
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install elan
+        run: |
+          curl -sSfL https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh -o elan-init.sh
+          sh elan-init.sh -y --default-toolchain none
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+      - name: Checksums of the copied files
+        run: |
+          sha256sum -c OAI-SHA256SUMS --quiet
+          sha256sum -c FixedPointTheorems-SHA256SUMS --quiet
+      - name: Mathlib cache
+        run: lake exe cache get
+      - name: Build
+        run: lake build
+      - name: Axioms
+        run: |
+          lake env lean Check/Axioms.lean | tee axioms.txt
+          ! grep -q -E 'sorryAx|ofReduceBool|trustCompiler' axioms.txt
+          test "$(grep -c 'depends on axioms' axioms.txt)" -eq 8
+      - name: Same statement
+        run: |
+          lake build Challenge
+          lake env lean Check/SameStatement.lean
+      - name: The hypothesis
+        run: lake env lean Check/Plane.lean

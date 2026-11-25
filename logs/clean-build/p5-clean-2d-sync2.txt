@@ -1,0 +1,15 @@
+0 modules copied
+✖ [9979/10539] Building Lemmata.FockCircuits.Exterior
+error: target is out-of-date and needs to be rebuilt
+✖ [10282/10837] Building Lemmata.FockCircuits.Circuit
+error: target is out-of-date and needs to be rebuilt
+✖ [10304/10837] Building Lemmata.FockCircuits.Laplace
+error: target is out-of-date and needs to be rebuilt
+⚠ [14888/15092] Replayed OAI.LinearAlgebra.MatrixMultiplication.Model
+warning: OAI/LinearAlgebra/MatrixMultiplication/Model.lean:37:7: `eval.match_1` refers to an auto-generated auxiliary declaration. These are not stable across refactors; consider using a different approach.
+
+Note: This linter can be disabled with `set_option linter.auxLemma false`
+Some required targets logged failures:
+- Lemmata.FockCircuits.Exterior
+- Lemmata.FockCircuits.Circuit
+- Lemmata.FockCircuits.Laplace

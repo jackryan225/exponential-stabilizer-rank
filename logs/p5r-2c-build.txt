@@ -1,0 +1,208 @@
+⚠ [3091/3355] Replayed StabilizerRank.Phase
+warning: StabilizerRank/Phase.lean:33:0: automatically included section variable(s) unused in theorem `StabilizerRank.IsPhase.add`:
+  [Module (ZMod 2) W]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [Module (ZMod 2) W] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: StabilizerRank/Phase.lean:44:0: automatically included section variable(s) unused in theorem `StabilizerRank.IsPhase.mul_right`:
+  [Module (ZMod 2) W]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [Module (ZMod 2) W] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: StabilizerRank/Phase.lean:47:0: automatically included section variable(s) unused in theorem `StabilizerRank.IsPhase.form_zero`:
+  [Module (ZMod 2) W]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [Module (ZMod 2) W] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+⚠ [3093/3355] Replayed StabilizerRank.Push
+warning: StabilizerRank/Push.lean:47:0: automatically included section variable(s) unused in theorem `StabilizerRank.sum_shift`:
+  [Module (ZMod 2) V]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [Module (ZMod 2) V] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+⚠ [3095/3355] Replayed StabilizerRank.Boolean
+warning: StabilizerRank/Boolean.lean:91:61: this tactic is never executed
+
+Note: This linter can be disabled with `set_option linter.unreachableTactic false`
+warning: StabilizerRank/Boolean.lean:91:86: this tactic is never executed
+
+Note: This linter can be disabled with `set_option linter.unreachableTactic false`
+warning: StabilizerRank/Boolean.lean:91:61: Unused tactic linter: `linear_combination -e2` does nothing
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+warning: StabilizerRank/Boolean.lean:91:86: Unused tactic linter: `linear_combination -e4` does nothing
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+⚠ [9487/9819] Replayed OAI.LinearAlgebra.MatrixMultiplication.Model
+warning: OAI/LinearAlgebra/MatrixMultiplication/Model.lean:37:7: `eval.match_1` refers to an auto-generated auxiliary declaration. These are not stable across refactors; consider using a different approach.
+
+Note: This linter can be disabled with `set_option linter.auxLemma false`
+✔ [9805/9819] Built NCBound.Circle (24s)
+✔ [9806/9819] Built NOF.Prop (5.2s)
+✔ [9807/9819] Built NOF.Main (6.8s)
+✔ [9808/9819] Built StabilizerRank.Lift (6.2s)
+✔ [9809/9819] Built StabilizerRank.Main (4.3s)
+✔ [9810/9819] Built StabilizerRank.Clifford (5.2s)
+⚠ [9811/9819] Built StabilizerRank.Dense (5.2s)
+warning: StabilizerRank/Dense.lean:90:0: automatically included section variable(s) unused in theorem `StabilizerRank.mono_eq`:
+  [Fintype W]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [Fintype W] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+⚠ [9812/9819] Built StabilizerRank.Orbit (5.3s)
+warning: StabilizerRank/Orbit.lean:33:0: automatically included section variable(s) unused in theorem `StabilizerRank.update_bit`:
+  [Fintype Q]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [Fintype Q] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: StabilizerRank/Orbit.lean:60:29: `if_false` has been deprecated: Use `ite_false` instead
+warning: StabilizerRank/Orbit.lean:69:29: `if_false` has been deprecated: Use `ite_false` instead
+warning: StabilizerRank/Orbit.lean:83:27: `if_false` has been deprecated: Use `ite_false` instead
+warning: StabilizerRank/Orbit.lean:83:37: `if_true` has been deprecated: Use `ite_true` instead
+warning: StabilizerRank/Orbit.lean:87:33: `if_false` has been deprecated: Use `ite_false` instead
+warning: StabilizerRank/Orbit.lean:87:43: `if_true` has been deprecated: Use `ite_true` instead
+warning: StabilizerRank/Orbit.lean:133:60: `if_false` has been deprecated: Use `ite_false` instead
+warning: StabilizerRank/Orbit.lean:133:70: `if_true` has been deprecated: Use `ite_true` instead
+warning: StabilizerRank/Orbit.lean:133:60: `if_false` has been deprecated: Use `ite_false` instead
+warning: StabilizerRank/Orbit.lean:133:70: `if_true` has been deprecated: Use `ite_true` instead
+warning: StabilizerRank/Orbit.lean:133:60: `if_false` has been deprecated: Use `ite_false` instead
+warning: StabilizerRank/Orbit.lean:133:70: `if_true` has been deprecated: Use `ite_true` instead
+warning: StabilizerRank/Orbit.lean:133:60: `if_false` has been deprecated: Use `ite_false` instead
+warning: StabilizerRank/Orbit.lean:133:70: `if_true` has been deprecated: Use `ite_true` instead
+warning: StabilizerRank/Orbit.lean:133:33: This simp argument is unused:
+  zero_mul
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [e2, sg, mul_zero, mul_one, one_ne, if_false, if_true, e0, e1, pow_zero, pow_one, zero_add,
+    add_zero]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: StabilizerRank/Orbit.lean:137:0: automatically included section variable(s) unused in theorem `StabilizerRank.orbit_eps`:
+  hι
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit hι in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: StabilizerRank/Orbit.lean:149:0: automatically included section variable(s) unused in theorem `StabilizerRank.res_insert`:
+  [Fintype Q]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [Fintype Q] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: StabilizerRank/Orbit.lean:389:2: Unused tactic linter: `beta_reduce` does nothing
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+⚠ [9813/9819] Built StabilizerRank.Standard (7.2s)
+warning: StabilizerRank/Standard.lean:69:66: `if_pos` has been deprecated: Use `ite_eq_left` instead
+warning: StabilizerRank/Standard.lean:102:70: `if_pos` has been deprecated: Use `ite_eq_left` instead
+warning: StabilizerRank/Standard.lean:108:70: `if_pos` has been deprecated: Use `ite_eq_left` instead
+warning: StabilizerRank/Standard.lean:119:0: automatically included section variable(s) unused in theorem `StabilizerRank.isPhase_explicit`:
+  [DecidableEq Q]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [DecidableEq Q] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+⚠ [9814/9819] Built StabilizerRank.Reduce (8.5s)
+warning: StabilizerRank/Reduce.lean:38:0: automatically included section variable(s) unused in theorem `StabilizerRank.isPhase_eps`:
+  [Fintype W]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [Fintype W] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: StabilizerRank/Reduce.lean:288:65: This simp argument is unused:
+  zero_mul
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [f, χ, span3_apply, zero_smul, one_smul, mul_zero, t0, t1, add_zero, mul_one]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: StabilizerRank/Reduce.lean:291:65: This simp argument is unused:
+  zero_mul
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [f, χ, span3_apply, zero_smul, one_smul, mul_zero, t0, t1, add_zero, zero_add, mul_one, one_mul]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: StabilizerRank/Reduce.lean:294:65: This simp argument is unused:
+  zero_mul
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [f, χ, span3_apply, zero_smul, one_smul, mul_zero, t0, t1, add_zero, zero_add, mul_one, one_mul]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: StabilizerRank/Reduce.lean:294:83: This simp argument is unused:
+  add_zero
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [f, χ, span3_apply, zero_smul, one_smul, mul_zero, zero_mul, t0, t1, zero_add, mul_one, one_mul]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: StabilizerRank/Reduce.lean:299:65: This simp argument is unused:
+  zero_mul
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [f, χ, span3_apply, zero_smul, one_smul, mul_zero, t0, t1, add_zero, zero_add, mul_one, one_mul]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: StabilizerRank/Reduce.lean:299:93: This simp argument is unused:
+  zero_add
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [f, χ, span3_apply, zero_smul, one_smul, mul_zero, zero_mul, t0, t1, add_zero, mul_one, one_mul]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: StabilizerRank/Reduce.lean:299:112: This simp argument is unused:
+  one_mul
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [f, χ, span3_apply, zero_smul, one_smul, mul_zero, zero_mul, t0, t1, add_zero, zero_add, mul_one]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: StabilizerRank/Reduce.lean:304:65: This simp argument is unused:
+  zero_mul
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [f, χ, span3_apply, zero_smul, one_smul, mul_zero, t0, t1, add_zero, zero_add, mul_one, one_mul]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: StabilizerRank/Reduce.lean:304:83: This simp argument is unused:
+  add_zero
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [f, χ, span3_apply, zero_smul, one_smul, mul_zero, zero_mul, t0, t1, zero_add, mul_one, one_mul]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: StabilizerRank/Reduce.lean:309:55: This simp argument is unused:
+  mul_zero
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [f, χ, span3_apply, zero_smul, one_smul, zero_mul, t0, t1, add_zero, zero_add, mul_one, one_mul]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: StabilizerRank/Reduce.lean:309:65: This simp argument is unused:
+  zero_mul
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [f, χ, span3_apply, zero_smul, one_smul, mul_zero, t0, t1, add_zero, zero_add, mul_one, one_mul]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: StabilizerRank/Reduce.lean:309:83: This simp argument is unused:
+  add_zero
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [f, χ, span3_apply, zero_smul, one_smul, mul_zero, zero_mul, t0, t1, zero_add, mul_one, one_mul]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+✔ [9815/9819] Built StabilizerRank.All (4.0s)
+✔ [9816/9819] Built StabilizerRank.Final (3.4s)
+⚠ [9817/9819] Built StabilizerRank.Sanity (3.8s)
+warning: StabilizerRank/Sanity.lean:45:6: `if_pos` has been deprecated: Use `ite_eq_left` instead
+warning: StabilizerRank/Sanity.lean:45:17: `if_neg` has been deprecated: Use `ite_eq_right` instead
+✔ [9818/9819] Built StabilizerRank (3.2s)
+Build completed successfully (9819 jobs).

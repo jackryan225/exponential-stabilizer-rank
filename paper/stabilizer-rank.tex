@@ -1,0 +1,184 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1.1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage[hidelinks]{hyperref}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{remark}[theorem]{Remark}
+\newcommand{\ket}[1]{|#1\rangle}
+\newcommand{\bra}[1]{\langle#1|}
+\newcommand{\C}{\mathbb C}
+\newcommand{\F}{\mathbb F}
+\newcommand{\unit}[2]{\langle #1\rangle_{#2}}
+\title{The exact stabilizer rank of copies of a non-stabilizer qubit state is exponential}
+\author{Research driven, orchestrated and reviewed by Jack Ryan.\\ Claude (by Anthropic), GPT-6.2 Astra (by OpenAI) and Gemini 4 Neon (by Google)\\ collaborated in finding and writing the proofs;\\ Gemini 4 Neon wrote an independent blind proof of Lemma 2.3;\\ GPT-6.2 Astra read an earlier version line by line (Remark 8).\\ The theorem is formalized in Lean 4 (Remark 6).\\ 25 November 2026. No professional mathematician has refereed this paper.}
+\date{}
+\begin{document}
+\maketitle
+\begin{abstract}
+The stabilizer rank $\chi(\psi)$ of a vector $\psi\in(\C^2)^{\otimes m}$ of $m$ qubits is the least number of stabilizer vectors with sum $\psi$. We prove a dichotomy: either $\psi$ is a stabilizer vector, and then
+$\chi(\psi^{\otimes n})\le1$ for all $n$, or there is $c>0$ with $\chi(\psi^{\otimes n})\ge2^{cn}$ for all $n$. This holds in particular for the magic states $\ket T$ and $\ket{\mathrm{CCZ}}$.
+The known lower bounds for the exact stabilizer rank of $n$ copies of $\ket T$ were at most nearly quadratic in $n$. The statement is about exact decompositions and gives nothing for approximation with constant error.
+The proof has one deep input: there are tensor prices on the Euclidean plane for which a wire costs its length (OpenAI, 24 November 2026).
+Lean 4 checks the theorem with that input (Remark 6). This text is an informal account; in places its route differs from the Lean proof.
+\end{abstract}
+
+\section{Results}
+We work with qubits: $p=2$, $\omega=-1$, and $V=\C^2$ with basis $\ket x$, $x\in\F_2$. We keep the letter $p$ in some formulas. For $v=(a,b)\in\F_p^r\times\F_p^r$ let $P_v$ be the Pauli operator $\ket x\mapsto\omega^{\langle b,x\rangle}\ket{x+a}$ on $V^{\otimes r}$, multiplied by a fourth root of unity such that $P_v^2=1$.
+The eigenvalues of $P_v$, $v\ne0$, are the $p$th roots of unity. $P_v$ and $P_w$ commute up to $\omega^{[v,w]}$, where $[\,,]$ is the symplectic form. The Clifford group on $r$ systems is the group of unitary operators that permute the lines $\C P_v$ (with scalars).
+It acts on $\F_p^{2r}$ through the whole group $\mathrm{Sp}(2r,p)$. A \emph{stabilizer vector} is a multiple of $C\ket{0\cdots0}$, $C$ a Clifford operator ($0$ is allowed). $\chi(\psi)$ is the least $J$ such that $\psi$ is a sum of $J$ stabilizer vectors.
+
+\begin{theorem}\label{thm:main}
+Let $\psi\in V^{\otimes m}$ be nonzero and not a stabilizer vector. There is $c=c(\psi)>0$ with $\chi(\psi^{\otimes n})\ge2^{cn}$ for all $n\ge1$.
+\end{theorem}
+\begin{corollary}
+$\chi(\ket T^{\otimes n})\ge2^{cn}$ and $\chi(\ket{\mathrm{CCZ}}^{\otimes n})\ge2^{c'n}$ for some $c,c'>0$ (by (S2) below, neither vector is a stabilizer vector).
+\end{corollary}
+The machine check covers only the statements listed in Remark 6 of Section 5.
+Limits give nothing new: the stabilizer vectors on $n$ systems lie on finitely many lines, so the sums of $J$ of them form a finite union of linear spaces.
+
+We use the following standard facts.
+\begin{itemize}
+\item[(S1)] If $\sigma$ is a stabilizer vector on $r+s$ systems and $\tau$ one on $s$ systems, then $\sigma\otimes\tau$ and the contraction $(1\otimes\bra\tau)\sigma$ are stabilizer vectors. If $\Pi$ is an eigenprojection of a Pauli operator, $\Pi\sigma$ is a stabilizer vector.
+\item[(S2)] $\sigma$ is a stabilizer vector if and only if $\sigma(x)=c\,[x\in A]\,i^{l(x)}(-1)^{q(x)}$, with an affine subspace $A\subseteq\F_2^r$, a polynomial $q$ over $\F_2$ of degree at most two, and an integer combination $l$ of the bits of $x$.
+\item[(S3)] For a stabilizer vector $\sigma\ne0$ there is a Lagrangian subspace $L\subset\F_p^{2r}$ such that $\sigma$ is an eigenvector of $P_v$ for $v\in L$. If $v\notin L$, all $p$ eigenprojections of $P_v$ give vectors of the same norm $\|\sigma\|/\sqrt p$ (some $P_u$, $u\in L$, permutes the eigenspaces of $P_v$ cyclically). A common eigenvector of the $P_v$, $v\in L$, $L$ Lagrangian, is a stabilizer vector.
+\end{itemize}
+A \emph{stabilizer operation} from $r$ to $r'$ systems is a composition of tensor products with stabilizer vectors, Clifford operators, and contractions with stabilizer vectors. It is linear and maps stabilizer vectors to stabilizer vectors. Tensor powers of stabilizer operations are stabilizer operations.
+
+\section{What can be made from copies of a state}
+Fix $\psi$. Let $\mathcal R_r\subseteq V^{\otimes r}$ be the set of all $S(\psi^{\otimes n})$, $n\ge0$, $S$ a stabilizer operation to $r$ systems, and $\mathcal W_r$ its Zariski closure. We view vectors as functions on $\F_p^r$. $\mathcal R_r$ contains the stabilizer vectors, is a cone, and is stable under the Clifford group.
+If $f\in\mathcal R_r$ and $g\in\mathcal R_1$, then $f(x)g(x_1)$ is in $\mathcal R_r$: apply $\ket{x,y}\mapsto\ket{x,y-x_1}$ to $f\otimes g$ and contract with $\bra0$. The map is bilinear, so the same holds for the closures. For $r=1$ this says that $\mathcal W_1$ is closed under pointwise products.
+
+\begin{lemma}\label{lem:one}
+Let $m=1$ and let $\psi\in V$ be nonzero and not a stabilizer vector. Then $\mathcal W_1$ contains a vector whose coordinates are all nonzero and not all of the same modulus.
+\end{lemma}
+\begin{proof}
+Let $|\psi|=1$. The $p+1$ lines of $\F_p^2$ give $p+1$ orthonormal bases of $V$ (common eigenvectors of the $P_v$, $v$ in the line), and Clifford operators map each of them to the standard basis. Write $\ket\psi\bra\psi=\frac1p\sum_vc_vP_v$ with $c_0=1$ and $\sum_v|c_v|^2=p$. For the basis $B$ of the line $\ell$ the numbers
+$|\langle e,\psi\rangle|^2$, $e\in B$, have the Fourier coefficients $c_v$, $v\in\ell$, up to phases, so $\sum_{e\in B}|\langle e,\psi\rangle|^4=\frac1p\sum_{v\in\ell}|c_v|^2$. Summing over the lines,
+\begin{equation}\label{eq:mub}
+\sum_B\sum_{e\in B}|\langle e,\psi\rangle|^4=\frac1p\Big((p+1)+\sum_{v\ne0}|c_v|^2\Big)=2 .
+\end{equation}
+Let $f_B\in\mathcal R_1$ be the vector of the coordinates of $\psi$ in $B$ (up to phases).
+If some $f_B$ has a zero coordinate, then $\psi$ is a multiple of a vector of $B$, so it is a stabilizer vector. If some $f_B$ has two coordinates of different modulus, we are done.
+In the remaining case all coordinates of $f_B$ have modulus $p^{-1/2}$, for all $B$; then the sum in \eqref{eq:mub} is $(p+1)/p=\frac32\ne2$.
+\end{proof}
+
+\begin{lemma}[Density]\label{lem:dense}
+Let $m=1$ and let $\psi\in V$ be nonzero and not a stabilizer vector. Then $\mathcal W_r=V^{\otimes r}$ for all $r\ge1$.
+\end{lemma}
+\begin{proof}
+Let $g$ be the vector of Lemma \ref{lem:one} and $D$ the operator of multiplication by $g(x_1)$ on $V^{\otimes r}$. It is invertible and $D\mathcal W_r\subseteq\mathcal W_r$; the descending chain $D^k\mathcal W_r$ of closed sets becomes constant, so $D\mathcal W_r=\mathcal W_r$. Let $G$ be the algebraic group of all $A\in\mathrm{GL}(V^{\otimes r})$ with $A\mathcal W_r=\mathcal W_r$.
+It contains the Clifford group and $D$. No power $D^n$, $n\ne0$, is a scalar, so the identity component of the closure of the group of the $D^n$ is not contained in the scalars, and the Lie algebra $\mathfrak g$ of $G$ contains a matrix that is not scalar. $\mathfrak g$ is invariant under conjugation with the Pauli operators, and these act on the lines $\C P_v$ by distinct characters.
+So $\mathfrak g$ is a sum of lines $\C P_v$, with at least one $v\ne0$. The Clifford group permutes the lines with $v\ne0$ transitively. So $\mathfrak g\supseteq\mathfrak{sl}(V^{\otimes r})$ and $G\supseteq\mathrm{SL}(V^{\otimes r})$, which is transitive on nonzero vectors. $\mathcal W_r$ contains $\ket{0\cdots0}$.
+\end{proof}
+
+\begin{lemma}[From many systems to one]\label{lem:reduce}
+Let $f\in V^{\otimes m}$, $m\ge2$, be nonzero and not a stabilizer vector. Some stabilizer operation from $m$ to $m-1$ systems maps $f$ to a vector that is nonzero and not a stabilizer vector.
+\end{lemma}
+\begin{proof}
+It is enough to find $v\ne0$ and an eigenprojection $\Pi$ of $P_v$ such that $\Pi f$ is not a stabilizer vector. (A Clifford operator takes $P_v$ to $P_{(0,e_m)}$ up to a scalar, so it takes $\Pi f$ to a product $g\otimes\ket\lambda$. Contract with $\bra\lambda$. If $g$ were a stabilizer vector, so would be $\Pi f$.) Suppose that all these $\Pi f$ are stabilizer vectors.
+Fix $v\ne0$, let $f_\lambda$ be the components of $f$ in the eigenspaces of $P_v$, and $L_\lambda\ni v$ the Lagrangian of $f_\lambda$ if $f_\lambda\ne0$. Let $\lambda$ be such that $\|f_\lambda\|$ is maximal.
+
+Let $w\in L_\lambda\setminus\langle v\rangle$ and let $\Pi$ be the eigenprojection of $P_w$ with $\Pi f_\lambda=f_\lambda$. It commutes with $P_v$. The vector $g=\Pi f$ is a nonzero stabilizer vector with the components $\Pi f_\mu$ in the eigenspaces of $P_v$. If $g$ is not an eigenvector of $P_v$, then by (S3) all $p$ vectors $\Pi f_\mu$ have the norm of $\Pi f_\lambda=f_\lambda$,
+so $\|f_\mu\|\ge\|\Pi f_\mu\|=\|f_\lambda\|\ge\|f_\mu\|$, $\Pi f_\mu=f_\mu$ for all $\mu$, and $f=\Pi f$ is a stabilizer vector, a contradiction. So $g=f_\lambda$ and $\Pi f_\mu=0$ for all $\mu\ne\lambda$.
+
+As $f$ is not a stabilizer vector, $f_\mu\ne0$ for some $\mu\ne\lambda$. For every $w\in L_\lambda\setminus\langle v\rangle$ we have seen that an eigenprojection of $P_w$ kills $f_\mu$. By (S3) $w\in L_\mu$, and the eigenvalues of $P_w$ on $f_\mu$ and $f_\lambda$ are different. These $w$ span $L_\lambda$, because $m\ge2$; so $L_\mu=L_\lambda=:L$.
+The quotient of the eigenvalues of $P_u$ on $f_\mu$ and on $f_\lambda$ is a character of $L\cong\F_p^m$. It is nontrivial at all $u\in L\setminus\langle v\rangle$, and at the nonzero multiples of $v$ because $\mu\ne\lambda$. But a character of $\F_p^m$, $m\ge2$, is trivial at some $u\ne0$.
+\end{proof}
+
+\section{Prices}
+A tensor on a finite set $I$ of parties has one finite index at each party; indices of dimension one may be added. $s$ is a \emph{restriction} of $t$ if linear maps at the parties take $t$ to $s$, and $s$ is \emph{covered} by $t_1,\dots,t_k$ if it is a sum of restrictions of them. In a product each party holds both indices.
+For $A\subseteq I$ the \emph{label} is $\unit qA=\sum_{i\le q}\bigotimes_{a\in A}e_i$; for $|A|=2$ it is a \emph{wire}. A \emph{spectral point} on $I$ is a function $\varphi\ge0$ of the tensors on $I$ with $\varphi(1)=1$, $\varphi(st)=\varphi(s)\varphi(t)$, and $\varphi(s)\le\sum\varphi(t_j)$ if $s$ is covered by the $t_j$. An \emph{upper functional} is the same with $\varphi(st)\le\varphi(s)\varphi(t)$. For $s>0$ the function $H=s\log_2\varphi$ is called a price;
+$\delta(A)=H(\unit2A)$, so $H(\unit qA)=\delta(A)\log_2q$, and $d(a,b)=\delta(\{a,b\})$. If $g=\log_2\varphi(\unit2A)>0$, the function $\varphi^{1/g}$ restricted to $A$ is multiplicative, additive on direct sums and monotone, with value $2$ at $\unit2A$ (expand $n$th powers into types); so prices in this sense are prices in the sense of \cite{EG}. Hence
+\begin{equation}\label{eq:sum}
+H\Big(\sum_{j\le J}t_j\Big)\le\max_jH(t_j)+\delta(A)\log_2J\qquad(t_j\text{ tensors of one format on }A).
+\end{equation}
+
+We use four facts from \cite{EG}, over the field $\C$.
+\begin{itemize}
+\item[(I1)] (Theorem 1.1.) Let $o_1,o_2,o_3$ be the vertices of an equilateral triangle of side $1$ in the plane and $m_{12},m_{13}$ the midpoints of two sides. There is a price on these five parties with $d$ equal to the Euclidean distance and $\delta(\{o_1,o_2,o_3\})=\frac32$.
+\item[(I2)] (Proposition ``Copying a common label''.) For every price, $\delta(A\cup B)+\delta(A\cap B)\le\delta(A)+\delta(B)$ if $A\cap B\ne\emptyset$.
+\item[(I3)] (Corollary ``Geodesic extension''.) For every price, $d(m,m')=0$ if $m$ and $m'$ are both midpoints of $a,b$.
+\item[(I4)] (Lemma ``Closure''.) If $H\le B$ on a set of nonzero tensors of one format, then $H\le B$ at the nonzero points of its Zariski closure.
+\end{itemize}
+$d$ is a pseudometric, $\delta$ is monotone.
+
+\begin{lemma}[Extension]\label{lem:ext}
+Let $\varphi$ be a spectral point on $I$, $R\notin I$, $U$ a tensor on $I\cup\{R\}$ and $c\ge1$ such that $\varphi(\ell(U^b))\le c^b$ for all $b\ge1$ and all linear functionals $\ell$ on the index of $U^b$ at $R$. Then there is a spectral point $\hat\varphi$ on $I\cup\{R\}$ that agrees with $\varphi$ on tensors on $I$ and has $\hat\varphi(U)\le c$.
+\end{lemma}
+\begin{proof}
+\emph{Step 0.} Below every upper functional $p_0$ there is a spectral point $\varphi'$ such that $\varphi'(x)\le\kappa\,\varphi'(y)$ whenever $p_0(tx)\le\kappa\,p_0(ty)$ for all $t$. Consider the set of upper functionals $p'\le p_0$ with the property: if $p_0(tx)\le\kappa p_0(ty)$ for all $t$, then $p'(tx)\le\kappa p'(ty)$ for all $t$. Infima of chains stay in the set, so there is a minimal $p'$.
+$\lim_np'(t^n)^{1/n}$ is in the set, so $p'(t^n)=p'(t)^n$. For $a\ne0$ the function $\inf_np'(ta^n)/p'(a)^n$ is in the set, so it is $p'$, and $p'(ta)\ge p'(t)p'(a)$.
+
+\emph{Why the two functions are in the set.} Write $P=p'$ and $F(t)=\lim_nP(t^n)^{1/n}$. The limit exists because $P$ is submultiplicative, and $F\le P\le p_0$, $F(1)=1$, $F(st)\le F(s)F(t)$.
+Let $x$ be a sum of restrictions $r_1,\dots,r_j$ of $t_1,\dots,t_j$. Then $x^n$ is the sum of the $j^n$ products $r_{w_1}\cdots r_{w_n}$, and the product of the word $w$ is a restriction of $\prod_it_i^{n_i}$, where $n_i$ is the number of letters $i$ in $w$ (a change of the order of the factors is a relabelling of the indices at each party).
+For $\epsilon>0$ there is $C_\epsilon$ with $P(t_i^k)\le C_\epsilon(F(t_i)+\epsilon)^k$ for all $i$ and all $k\ge0$. So
+\[
+P(x^n)\le\sum_{n_1+\dots+n_j=n}\binom n{n_1,\dots,n_j}\prod_iP(t_i^{n_i})\le C_\epsilon^{\,j}\Big(\sum_i\big(F(t_i)+\epsilon\big)\Big)^n ,
+\]
+and $F(x)\le\sum_iF(t_i)$. If $p_0(tx)\le\kappa p_0(ty)$ for all $t$, the property of $P$, used $n$ times with the tensors $t^nx^{n-1-k}y^k$, $0\le k<n$, in the place of $t$, gives $P(t^nx^n)\le\kappa^nP(t^ny^n)$, so $F(tx)\le\kappa F(ty)$. Hence $F$ is in the set, $F=P$ because $P$ is minimal, and $P(t^n)=P(t)^n$.
+Now let $a\ne0$ and $Q(t)=\inf_nP(ta^n)/P(a)^n$. Here $P(a)\ge1$, because $1$ is a restriction of $a$. The quotients do not increase with $n$, so the infimum is a limit. $Q\le P$, and $Q(1)=1$ because $P(a^n)=P(a)^n$. A cover of $x$ by the $t_i$ gives a cover of $xa^n$ by the $t_ia^n$, so $Q(x)\le\sum_iQ(t_i)$. From $P(sta^{2n})\le P(sa^n)P(ta^n)$ we get $Q(st)\le Q(s)Q(t)$. The property of $P$ with $ta^n$ in the place of $t$ gives the property for $Q$. Hence $Q$ is in the set, and $Q=P$.
+
+\emph{Step 1.} Let $u(t)=\inf\sum_jc^{b_j}\varphi(B_j)$ over all covers of $t$ by tensors $U^{b_j}B_j$ with $B_j$ on $I$, $b_j\ge0$. Covers multiply and compose, so $u$ is an upper functional, and $u(U)\le c$. Let $A$ be a tensor on $I$; $u(A)\le\varphi(A)$. If $A=\sum_js_j$ with $s_j$ a restriction of $U^{b_j}B_j$, the map at $R$ is a functional $\ell_j$, because $A$ has a one-dimensional index at $R$;
+so $s_j$ is a restriction of $\ell_j(U^{b_j})B_j$ and $\varphi(A)\le\sum\varphi(s_j)\le\sum_jc^{b_j}\varphi(B_j)$. Hence $u=\varphi$ on tensors on $I$.
+
+\emph{Step 2.} For a nonzero tensor $C$ on $I$ let $q_C(t)=\lim_nu(tC^n)/\varphi(C)^n$ (the quotient does not increase, because $u(C)=\varphi(C)$ by Step 1). It is an upper functional below $u$ (the argument for $Q$ in Step 0, with $u$ and $C$ in the place of $P$ and $a$; here $u(C^n)=\varphi(C)^n$) with $q_C(tC)=\varphi(C)q_C(t)$. Step 0 with $p_0=q_C$, $x=1$, $y=C$ and $\kappa=\varphi(C)^{-1}$ gives a spectral point $\varphi_C\le u$ with $\varphi_C(C)\ge\varphi(C)$. If $C=C_1\cdots C_k$, then $\varphi_C(C_i)\le u(C_i)=\varphi(C_i)$, so $\varphi_C(C_i)=\varphi(C_i)$ for all $i$. The set of spectral points below $u$ is compact, so one of them agrees with $\varphi$ on all tensors on $I$.
+\end{proof}
+
+Let $H$ be the price of (I1). For finite sets $X,Y,Z$ and $T\colon X\times Y\times Z\to\C$ the \emph{lift} is
+\[
+\hat T=\sum_{x,y,z}T(x,y,z)\,e_{xy}\otimes e_{yz}\otimes e_{zx},
+\]
+where $o_1,o_2,o_3$ hold the indices $(x,y)$, $(y,z)$, $(z,x)$. For $T=1$ it is a product of three wires. The lift is linear in $T$ and $\widehat{T\otimes T'}=\hat T\,\hat T'$. A function of two of the three arguments that multiplies $T$ acts on $\hat T$ by a diagonal map at one party.
+
+\begin{proposition}\label{prop:expensive}
+For every $q\ge2$ there are $b\ge1$ and $T\colon([q]^b)^3\to\C$ with $H(\hat T)>3b\log_2q$.
+\end{proposition}
+\begin{proof}
+Suppose $H(\hat T)\le3b\log_2q$ for all $b$ and $T$. Let $U=\unit q{o_1o_3R}\unit q{o_1o_2R}\unit q{o_2o_3R}$ with a new party $R$. The functionals $\ell$ on the index of $U^b$ at $R$ are the functions $T$ on $([q]^b)^3$, and $\ell(U^b)=\hat T$. Apply Lemma \ref{lem:ext} to $\varphi=2^{H/s}$ on the five parties, where $s$ is the price of the binary label on them.
+There is a price on six parties that extends $H$, with $\delta(o_1o_2R)+\delta(o_2o_3R)+\delta(o_1o_3R)\le3$. Each term is at least $d(o_i,o_j)=1$, so each is $1$. By (I2) for $A=\{o_1,o_2,R\}$, $B=\{o_1,o_3,R\}$,
+\[
+\tfrac32+d(o_1,R)\le\delta(A\cup B)+\delta(A\cap B)\le2 ,
+\]
+so $d(o_1,R)\le\frac12$, and in the same way $d(o_2,R),d(o_3,R)\le\frac12$. So $R$ is a midpoint of $o_1,o_2$ and of $o_1,o_3$. By (I3) it has distance $0$ from $m_{12}$ and from $m_{13}$. But $d(m_{12},m_{13})=\frac12$.
+\end{proof}
+
+\begin{lemma}[Stabilizer vectors are cheap]\label{lem:cheap}
+Let $\sigma$ be a nonzero stabilizer vector on $N$ systems, and let the coordinates be divided into three blocks $x\in X$, $y\in Y$, $z\in Z$, where $X,Y,Z$ are spaces over $\F_p$ of total dimension $N$. Then $H(\hat\sigma)\le N\log_2p$.
+\end{lemma}
+\begin{proof}
+By (S2) $\sigma=c\,[x\in A]$ times a product of nowhere vanishing functions of at most two coordinates. Every such function depends on at most two of the blocks, so it acts by an invertible diagonal map at one party and does not change the price. A translation of $A$ acts by permutations of the bases at the parties. So let $\sigma=[(x,y,z)\in W]$ with a linear subspace $W\subseteq X\oplus Y\oplus Z$.
+Put $K_1=W\cap Z$, $K_2=W\cap X$, $K_3=W\cap Y$ and $W=K_1\oplus K_2\oplus K_3\oplus M$, with dimensions $k_1,k_2,k_3,m$. Party $o_1$ holds $(x,y)$, which is an injective function on $W/K_1\cong K_2\oplus K_3\oplus M$. In the same way $o_2$ holds $(y,z)$, injective on $W/K_2$, and $o_3$ holds $(z,x)$, injective on $W/K_3$.
+So after injective relabelling of the bases $\hat\sigma$ is the product of a wire between $o_2,o_3$ for $K_1$, a wire between $o_1,o_3$ for $K_2$, a wire between $o_1,o_2$ for $K_3$, and a label on all three parties for $M$. Its price is $(k_1+k_2+k_3+\frac32m)\log_2p$. Counting dimensions, $k_2+k_3+m\le\dim X+\dim Y$, $k_1+k_3+m\le\dim Y+\dim Z$, $k_1+k_2+m\le\dim Z+\dim X$. The sum of the three is
+$2(k_1+k_2+k_3)+3m\le2N$.
+\end{proof}
+
+\section{Proof of Theorem \ref{thm:main}}
+Let $\psi$ be nonzero and not a stabilizer vector. If $m\ge2$, Lemma \ref{lem:reduce}, used $m-1$ times, gives a stabilizer operation $S$ such that $\psi'=S\psi\in V$ is nonzero and not a stabilizer vector, and $\chi(\psi'^{\otimes n})\le\chi(\psi^{\otimes n})$. So let $m=1$. As $\chi$ is submultiplicative, $c=\lim_n\frac1n\log_2\chi(\psi^{\otimes n})$ exists and $\chi(\psi^{\otimes n})\ge2^{cn}$ for all $n$. Suppose $c=0$.
+
+Let $b\ge1$ and $\Phi\in\mathcal R_{3b}$, $\Phi=S(\psi^{\otimes n})\ne0$. Then $\Phi^{\otimes N}=S^{\otimes N}(\psi^{\otimes nN})$ is a sum of $\chi(\psi^{\otimes nN})=2^{o(N)}$ stabilizer vectors on $3bN$ systems. Divide the coordinates of each copy into three blocks of $b$. By Lemma \ref{lem:cheap} and \eqref{eq:sum}
+\[
+N\,H(\hat\Phi)=H\big(\widehat{\Phi^{\otimes N}}\big)\le3bN\log_2p+\tfrac32\,o(N),
+\]
+so $H(\hat\Phi)\le3b\log_2p$. By (I4) and Lemma \ref{lem:dense} this holds for all nonzero $\Phi\in V^{\otimes3b}$, that is, for all $T\colon(\F_p^b)^3\to\C$ and all $b$. This contradicts Proposition \ref{prop:expensive}. \qed
+
+\section{Remarks}
+\begin{enumerate}
+\item \emph{Constants.} $c(\psi)$ is not explicit: the table $T$ of Proposition \ref{prop:expensive} comes from Zorn's lemma, and the number of copies of $\psi$ that is needed to leave the closed set $\{H(\hat\Phi)\le3b\log_2p\}$ is not bounded.
+\item \emph{What is not proved.} Nothing is said about approximate stabilizer rank with constant error, stabilizer extent or stabilizer fidelity. Prices are semicontinuous and do not see errors that are small in norm. Systems with more than two levels are not treated here: an extension to every prime dimension exists as an unformalized draft and is not part of this release.
+\item \emph{Known before, as far as a search on 25 November 2026 shows.} Exact rank of $\ket T^{\otimes n}$: $\Omega(n)$ (Peleg, Shpilka, Volk 2021, Lovitz and Steffan), and $\Omega(n)$ for qudit analogues in prime dimensions (Labib, arXiv 2107.10551); super-polynomial unless the permanent has polynomial-size circuits (Mehraban and Tahmasbi, Theorem 1.6, a conditional bound); nearly quadratic bounds also for approximation (Mehraban and Tahmasbi 2023, arXiv 2305.10277; arXiv 2610.06819, October 2026, for all non-stabilizer qubit states). arXiv 2610.03658 (October 2026) gives $\Omega(n^2/\mathrm{polylog}\,n)$ as the best known bound. Upper bounds are exponential with small exponent.
+\item \emph{What is a short corollary.} For the state $\ket T$ the theorem follows in a few lines from \cite{EG} alone: the price of a stabilizer state of $3h$ qubits, split into three blocks of $h$ qubits at the corners of the triangle, is at most $\frac32h$ by the GHZ/EPR decomposition of Bravyi, Fattal and Gottesman (2006); the theorem ``Exact extension'' of \cite{EG}, part (2), on a triangle with two side midpoints gives a table above that value (this also replaces Proposition \ref{prop:expensive}); Clifford$+T$ universality gives density. This was pointed out in our internal review. For another vector of one qubit the density step needs Lemmas \ref{lem:one} and \ref{lem:dense}. The step without an earlier source is Lemma \ref{lem:reduce} (several systems, $m\ge2$).
+\item \emph{Related work on other resource ranks.} A zero-one law for the approximate Gaussian rank of every non-Gaussian state is in arXiv 2610.02172 (1 October 2026); its outlook asks for the stabilizer analogue. See also arXiv 2610.03699.
+\item \emph{Machine check.} Lean 4 (this repository) proves the following, for exact rank only. The hypothesis of (a) and (b) is the statement of OpenAI's theorem \texttt{matrix\_spectral\_plane} (planar prices over every field), which is proved in OpenAI's Lean library; the form in which that theorem is a real import (\texttt{unconditional/Solution.lean}) was built on 25 November 2026, with the axioms \texttt{propext}, \texttt{Classical.choice}, \texttt{Quot.sound} only. (a) Theorem \ref{thm:main}, every number $m$ of qubits, over $\C$ (\texttt{stabilizer\_rank\_exponential}). (b) The case $\ket T$ over $\C$ (\texttt{t\_state}), and over every field $F$ with $2\ne0$ that has an element $\omega$ with $\omega^4=-1$ (\texttt{t\_state\_field}). There the stabilizer vectors are made with the gates $H$, $S=\mathrm{diag}(1,\omega^2)$ and CNOT, and the vector is $b\mapsto\omega^{|b|}$. (c) Without hypothesis: the standard form (S2) over $\C$, and the case of a stabilizer vector. For $\ket{\mathrm{CCZ}}$ there is no checked top-level statement. Over $\C$ it is an instance of (a) once one shows that $\ket{\mathrm{CCZ}}$ is not a stabilizer vector; that step is not formalized. An internal lemma (\texttt{ccz\_state} in \texttt{StabilizerRank/Main.lean}, compiled with the rest) states, over every field with $2\ne0$ and for every $\iota$ with $\iota^4=1$, given planar prices over that field: there are $c>0$ and $n_0$ such that for $n\ge n_0$ the function $(-1)^{\sum_ix_iy_iz_i}$ is not a linear combination of fewer than $2^{cn}$ functions $[x\in A]\,\iota^{l(x)}(-1)^{q(x)}$; its axioms were not printed and its statement was not compared with a separate statement file. The Lean proof uses another reduction to one qubit (four points of a plane and eight points of a cube), not Lemma \ref{lem:reduce}; Lemma \ref{lem:cheap} is from there. Lemmas \ref{lem:one} to \ref{lem:reduce} in this form are not formalized. The claim of this paper is what Lean checks; the text above is an informal account of it.
+\item \emph{Blind check of Lemma \ref{lem:reduce}.} Gemini 4 Neon (Google) received the statement of Lemma \ref{lem:reduce} with all definitions and without the proof, and returned a different complete proof, by the contractions of one qubit with $\ket0,\ket1,\ket+,\ket-$ and the facts that a nonzero stabilizer vector has an affine support and constant modulus on it. Claude checked that proof line by line and found no gap. Both proofs use the fact (S1) that stabilizer operations map stabilizer vectors to stabilizer vectors.
+\item \emph{Line-by-line read.} GPT-6.2 Astra (OpenAI) read an earlier and longer version of this paper as a hostile referee on 25 November 2026, with the source of \cite{EG} at hand. It found no error. It found one gap: Step 0 of the proof of Lemma \ref{lem:ext} said without proof that two functions are in the set. The paragraph ``Why the two functions are in the set'' was added after that read, along the lines that Astra gave, and Step 2 now says how the same argument applies to $q_C$. Two Claude agents checked these additions one after the other; no other model has read them. Astra also noted that Remark 4 covers the state $\ket T$ and not every vector of one qubit; the remark now says so.
+\end{enumerate}
+
+\begin{thebibliography}{9}
+\bibitem{EG} OpenAI, \emph{Euclidean geometry in the asymptotic spectrum of tensors}, 24 November 2026.
+\end{thebibliography}
+\end{document}

@@ -1,0 +1,5 @@
+def StabilizerRank.Final.MatrixSpectralPlane.{u} : Prop :=
+∀ (F : Type u) [inst : Field F],
+  ∃ P,
+    ∀ {I : Type} [inst_1 : Fintype I] (T : OAI.LinearAlgebra.SpectralBooks.SiteTensor.Raw I F),
+      ConvexOn ℝ Set.univ (P.price T)

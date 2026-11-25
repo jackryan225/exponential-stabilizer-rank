@@ -1,0 +1,8 @@
+'StabilizerRank.Final.stabilizer_rank_exponential' depends on axioms: [propext, Classical.choice, Quot.sound]
+'StabilizerRank.Final.tensor_power' depends on axioms: [propext, Classical.choice, Quot.sound]
+'StabilizerRank.Final.t_state' depends on axioms: [propext, Classical.choice, Quot.sound]
+'StabilizerRank.Final.t_state_field' depends on axioms: [propext, Classical.choice, Quot.sound]
+'StabilizerRank.Final.standard_form' depends on axioms: [propext, Classical.choice, Quot.sound]
+'StabilizerRank.Final.stabilizer_rank_exponential_standard' depends on axioms: [propext, Classical.choice, Quot.sound]
+'StabilizerRank.exists_decomposition' depends on axioms: [propext, Classical.choice, Quot.sound]
+'StabilizerRank.t_state_not_stabilizer' depends on axioms: [propext, Classical.choice, Quot.sound]

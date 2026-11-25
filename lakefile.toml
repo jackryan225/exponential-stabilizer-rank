@@ -1,0 +1,49 @@
+name = "stabilizer_rank"
+defaultTargets = ["StabilizerRank"]
+
+[leanOptions]
+autoImplicit = false
+
+[[require]]
+name = "mathlib"
+git = "https://github.com/leanprover-community/mathlib4.git"
+rev = "d13f23b723b8a846827a245b89c10fc7d3f11612"
+
+# 867 unchanged files of openai/math, commit 3344da59991ed94f9ba711217b29c1d760badfa6, folder lean/.
+[[lean_lib]]
+name = "OAI"
+
+# 5 files of harfe/fixed-point-theorems-lean4, commit 770940ddf9878cf61952ed53d910b92bca841838, with the compatibility
+# patch of openai/math (lean/patches/fixed-point-theorems-lean4341.patch). The OpenAI files import them.
+[[lean_lib]]
+name = "FixedPointTheorems"
+
+# Our files: two points on a circle (NCBound.Circle), prices of three-party tables (NOF), and the stabilizer rank.
+[[lean_lib]]
+name = "NCBound"
+
+[[lean_lib]]
+name = "NOF"
+
+[[lean_lib]]
+name = "StabilizerRank"
+
+# The statements alone, with `sorry` in place of the proofs. Not a default target.
+[[lean_lib]]
+name = "Challenge"
+roots = ["Challenge.Statement"]
+
+# The bridge to the formal-conjectures target (Mathlib and StabilizerRank.Def only). Not a default target.
+[[lean_lib]]
+name = "Check"
+roots = ["Check.FCBridge"]
+
+# Lemmata (37 files of ZIB-IOL/lemmata) and the results without hypothesis. Not default targets: the files of these two
+# libraries other than unconditional/ are not in this repository; unconditional/build.sh fetches them.
+[[lean_lib]]
+name = "Lemmata"
+
+[[lean_lib]]
+name = "Unconditional"
+srcDir = "unconditional"
+roots = ["Solution", "SameStatementU", "FCBridgeU"]
